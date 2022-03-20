@@ -1,8 +1,16 @@
-# Welcome to your CDK TypeScript project
+# Welcome to CDK TypeScript project
 
-This is a blank project for TypeScript development with CDK.
+This is a project for TypeScript development with CDK v2.
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
+
+# Install
+
+```
+npm i @aws-cdk/aws-iot-alpha
+npm i @aws-cdk/aws-iot-actions-alpha
+npm i @aws-cdk/aws-timestream
+```
 
 ## Useful commands
 
