@@ -12,7 +12,7 @@ export class Cdkv2SamLambdaRustStack extends Stack {
       description:
         'Rust function on Lambda using the custom runtime',
       code: lambda.Code.fromAsset(
-        'functions/target/x86_64-unknown-linux-musl/release'
+        'functions/lambda'
       ),
       runtime: lambda.Runtime.PROVIDED_AL2,
       architecture: lambda.Architecture.X86_64,
@@ -20,7 +20,8 @@ export class Cdkv2SamLambdaRustStack extends Stack {
       environment: {
         RUST_BACKTRACE: '1',
       },
-      logRetention: logs.RetentionDays.ONE_WEEK,
+      // need to finger out why duplicated lambda here.
+      // logRetention: logs.RetentionDays.ONE_WEEK,
     })
   }
 }

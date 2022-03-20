@@ -1,4 +1,4 @@
-use lambda_runtime::{handler_fn, Context, Error};
+use lambda_runtime::{service_fn, Error, LambdaEvent};
 use log::LevelFilter;
 use serde_json::{json, Value};
 use simple_logger::SimpleLogger;
@@ -10,12 +10,13 @@ async fn main() -> Result<(), Error> {
     .init()
     .unwrap();
 
-  let func = handler_fn(handler);
+  let func = service_fn(func);
   lambda_runtime::run(func).await?;
   Ok(())
 }
 
-async fn handler(event: Value, _: Context) -> Result<Value, Error> {
+pub(crate) async fn func(event: LambdaEvent<Value>) -> Result<Value, Error> {
+  let (event, ctx) = event.into_parts();
   let message = event["message"].as_str().unwrap_or("world");
   let first_name = event["firstName"].as_str().unwrap_or("Anonymous");
 
