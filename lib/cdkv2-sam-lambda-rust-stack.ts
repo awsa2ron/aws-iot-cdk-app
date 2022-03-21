@@ -81,13 +81,23 @@ export class Cdkv2SamLambdaRustStack extends Stack {
     });
     stream_lambda.addEventSource(stream_source);
 
-
-    // Another part
     // When a client receives a lifecycle event, you can enqueue a message, for 5 seconds.
     // When that message becomes available and is processed, you can first check if the 
     // device is still offline before taking further action.
     // One way to do this is by using SQS Delay Queues. 
     // https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-delay-queues.html
+    new iotDisconnections(this, 'MyNotifyingBucket', { logGroup: log_group });
+  }
+}
+
+export interface iotDisconnectionsProps {
+  logGroup?: logs.LogGroup;
+}
+
+export class iotDisconnections extends Construct {
+  constructor(scope: Construct, id: string, props: iotDisconnectionsProps = {}) {
+    super(scope, id);
+    // AWS SQS
     let discon_queue = new sqs.Queue(this, 'Queue', {
       queueName: QUEUE_NAME,
       deliveryDelay: Duration.seconds(5),
@@ -101,7 +111,7 @@ export class Cdkv2SamLambdaRustStack extends Stack {
     let queueTopicRule = new iot.TopicRule(this, IOT_QUEUE_RULE_NAME + 'Id', {
       topicRuleName: IOT_QUEUE_RULE_NAME,
       sql: iot.IotSql.fromStringAsVer20160323(IOT_QUEUE_RULE_SQL),
-      errorAction: new actions.CloudWatchLogsAction(log_group),
+      // errorAction: new actions.CloudWatchLogsAction(props.logGroup),
     });
     queueTopicRule.addAction(queue_action);
 
@@ -125,7 +135,5 @@ export class Cdkv2SamLambdaRustStack extends Stack {
       maxBatchingWindow: Duration.seconds(5),
     });
     discon_lambda.addEventSource(discon_source);
-
-
   }
 }
