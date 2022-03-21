@@ -2,11 +2,12 @@ import { Duration, Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as kinesis from 'aws-cdk-lib/aws-kinesis';
-import * as events from 'aws-cdk-lib/aws-lambda-event-sources';
+import * as lambda_events from 'aws-cdk-lib/aws-lambda-event-sources';
 import * as logs from 'aws-cdk-lib/aws-logs';
 import * as iot from '@aws-cdk/aws-iot-alpha';
 import * as actions from '@aws-cdk/aws-iot-actions-alpha';
-import * as ts from '@aws-cdk/aws-timestream';
+import * as iot_events from '@aws-cdk/aws-iotevents-alpha';
+import * as iot_events_actions from '@aws-cdk/aws-iotevents-actions-alpha';
 
 const STREAM_NAME = 'iotCdkAppStream'
 const STREAM_PARTITION_KEY = 'iotCdkAppPartitionkey'
@@ -61,19 +62,11 @@ export class Cdkv2SamLambdaRustStack extends Stack {
     });
 
     // AWS Lambda function event mapping
-    let stream_source = new events.KinesisEventSource(stream, {
+    let stream_source = new lambda_events.KinesisEventSource(stream, {
       batchSize: 10, // default
       maxBatchingWindow: Duration.minutes(1),
       startingPosition: lambda.StartingPosition.TRIM_HORIZON,
     });
     stream_lambda.addEventSource(stream_source);
-
-    // const resource = new ts.CfnDatabase(this, DATABASE_NAME, {
-    //   databaseName: DATABASE_NAME,
-    //   kmsKeyId: DATABASE_NAME,
-    //   tags: null,
-    // })
-    // let ts_table = new ts.CfnTable(this, 'Table');
-
   }
 }
