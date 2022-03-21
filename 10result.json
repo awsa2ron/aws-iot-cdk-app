@@ -1,0 +1,164 @@
+{
+    "Records": [
+        {
+            "awsRegion": "us-west-2",
+            "eventID": "shardId-000000000000:49627791393825467122644142579324898526009412296934162434",
+            "eventName": "aws:kinesis:record",
+            "eventSource": "aws:kinesis",
+            "eventSourceARN": "arn:aws:kinesis:us-west-2:628913483082:stream/my-awesome-stream",
+            "eventVersion": "1.0",
+            "invokeIdentityArn": "arn:aws:iam::628913483082:role/Cdkv2SamLambdaRustStack-iotcdkappServiceRoleF76358-163KLQ0ZEJZYO",
+            "kinesis": {
+                "approximateArrivalTimestamp": 1647754343.609,
+                "data": "ewogICJtZXNzYWdlIjogInZhbHVlMSIsCiAgImZpcnN0TmFtZSI6ICJ2YWx1ZTIiCn0=",
+                "kinesisSchemaVersion": "1.0",
+                "partitionKey": "97d5d4d7-8ff2-425d-aca7-6a579a1512d3",
+                "sequenceNumber": "49627791393825467122644142579324898526009412296934162434"
+            }
+        },
+        {
+            "awsRegion": "us-west-2",
+            "eventID": "shardId-000000000000:49627791393825467122644142579326107451829027063547822082",
+            "eventName": "aws:kinesis:record",
+            "eventSource": "aws:kinesis",
+            "eventSourceARN": "arn:aws:kinesis:us-west-2:628913483082:stream/my-awesome-stream",
+            "eventVersion": "1.0",
+            "invokeIdentityArn": "arn:aws:iam::628913483082:role/Cdkv2SamLambdaRustStack-iotcdkappServiceRoleF76358-163KLQ0ZEJZYO",
+            "kinesis": {
+                "approximateArrivalTimestamp": 1647754344.872,
+                "data": "ewogICJtZXNzYWdlIjogInZhbHVlMSIsCiAgImZpcnN0TmFtZSI6ICJ2YWx1ZTIiCn0=",
+                "kinesisSchemaVersion": "1.0",
+                "partitionKey": "38db82fe-5e84-4d9c-8e4f-930b351db4a4",
+                "sequenceNumber": "49627791393825467122644142579326107451829027063547822082"
+            }
+        },
+        {
+            "awsRegion": "us-west-2",
+            "eventID": "shardId-000000000000:49627791393825467122644142579327316377648641692722528258",
+            "eventName": "aws:kinesis:record",
+            "eventSource": "aws:kinesis",
+            "eventSourceARN": "arn:aws:kinesis:us-west-2:628913483082:stream/my-awesome-stream",
+            "eventVersion": "1.0",
+            "invokeIdentityArn": "arn:aws:iam::628913483082:role/Cdkv2SamLambdaRustStack-iotcdkappServiceRoleF76358-163KLQ0ZEJZYO",
+            "kinesis": {
+                "approximateArrivalTimestamp": 1647754345.687,
+                "data": "ewogICJtZXNzYWdlIjogInZhbHVlMSIsCiAgImZpcnN0TmFtZSI6ICJ2YWx1ZTIiCn0=",
+                "kinesisSchemaVersion": "1.0",
+                "partitionKey": "c7044a8a-6cd9-42e2-a552-f667fcd7a62e",
+                "sequenceNumber": "49627791393825467122644142579327316377648641692722528258"
+            }
+        },
+        {
+            "awsRegion": "us-west-2",
+            "eventID": "shardId-000000000000:49627791393825467122644142579328525303468256390616711170",
+            "eventName": "aws:kinesis:record",
+            "eventSource": "aws:kinesis",
+            "eventSourceARN": "arn:aws:kinesis:us-west-2:628913483082:stream/my-awesome-stream",
+            "eventVersion": "1.0",
+            "invokeIdentityArn": "arn:aws:iam::628913483082:role/Cdkv2SamLambdaRustStack-iotcdkappServiceRoleF76358-163KLQ0ZEJZYO",
+            "kinesis": {
+                "approximateArrivalTimestamp": 1647754346.697,
+                "data": "ewogICJtZXNzYWdlIjogInZhbHVlMSIsCiAgImZpcnN0TmFtZSI6ICJ2YWx1ZTIiCn0=",
+                "kinesisSchemaVersion": "1.0",
+                "partitionKey": "d9f9b814-e645-4697-a694-f9745c01b419",
+                "sequenceNumber": "49627791393825467122644142579328525303468256390616711170"
+            }
+        },
+        {
+            "awsRegion": "us-west-2",
+            "eventID": "shardId-000000000000:49627791393825467122644142579329734229287871088510894082",
+            "eventName": "aws:kinesis:record",
+            "eventSource": "aws:kinesis",
+            "eventSourceARN": "arn:aws:kinesis:us-west-2:628913483082:stream/my-awesome-stream",
+            "eventVersion": "1.0",
+            "invokeIdentityArn": "arn:aws:iam::628913483082:role/Cdkv2SamLambdaRustStack-iotcdkappServiceRoleF76358-163KLQ0ZEJZYO",
+            "kinesis": {
+                "approximateArrivalTimestamp": 1647754347.708,
+                "data": "ewogICJtZXNzYWdlIjogInZhbHVlMSIsCiAgImZpcnN0TmFtZSI6ICJ2YWx1ZTIiCn0=",
+                "kinesisSchemaVersion": "1.0",
+                "partitionKey": "dbd7d582-7b74-4c9a-a454-4ef0581a9379",
+                "sequenceNumber": "49627791393825467122644142579329734229287871088510894082"
+            }
+        },
+        {
+            "awsRegion": "us-west-2",
+            "eventID": "shardId-000000000000:49627791393825467122644142579330943155107485786405076994",
+            "eventName": "aws:kinesis:record",
+            "eventSource": "aws:kinesis",
+            "eventSourceARN": "arn:aws:kinesis:us-west-2:628913483082:stream/my-awesome-stream",
+            "eventVersion": "1.0",
+            "invokeIdentityArn": "arn:aws:iam::628913483082:role/Cdkv2SamLambdaRustStack-iotcdkappServiceRoleF76358-163KLQ0ZEJZYO",
+            "kinesis": {
+                "approximateArrivalTimestamp": 1647754348.748,
+                "data": "ewogICJtZXNzYWdlIjogInZhbHVlMSIsCiAgImZpcnN0TmFtZSI6ICJ2YWx1ZTIiCn0=",
+                "kinesisSchemaVersion": "1.0",
+                "partitionKey": "52e614da-ce59-4fb0-91f7-b73962dd8a92",
+                "sequenceNumber": "49627791393825467122644142579330943155107485786405076994"
+            }
+        },
+        {
+            "awsRegion": "us-west-2",
+            "eventID": "shardId-000000000000:49627791393825467122644142579332152080927100553018736642",
+            "eventName": "aws:kinesis:record",
+            "eventSource": "aws:kinesis",
+            "eventSourceARN": "arn:aws:kinesis:us-west-2:628913483082:stream/my-awesome-stream",
+            "eventVersion": "1.0",
+            "invokeIdentityArn": "arn:aws:iam::628913483082:role/Cdkv2SamLambdaRustStack-iotcdkappServiceRoleF76358-163KLQ0ZEJZYO",
+            "kinesis": {
+                "approximateArrivalTimestamp": 1647754349.695,
+                "data": "ewogICJtZXNzYWdlIjogInZhbHVlMSIsCiAgImZpcnN0TmFtZSI6ICJ2YWx1ZTIiCn0=",
+                "kinesisSchemaVersion": "1.0",
+                "partitionKey": "d3ec396c-dd95-4f53-a3d4-7a51ba8a92d7",
+                "sequenceNumber": "49627791393825467122644142579332152080927100553018736642"
+            }
+        },
+        {
+            "awsRegion": "us-west-2",
+            "eventID": "shardId-000000000000:49627791393825467122644142579333361006746715250912919554",
+            "eventName": "aws:kinesis:record",
+            "eventSource": "aws:kinesis",
+            "eventSourceARN": "arn:aws:kinesis:us-west-2:628913483082:stream/my-awesome-stream",
+            "eventVersion": "1.0",
+            "invokeIdentityArn": "arn:aws:iam::628913483082:role/Cdkv2SamLambdaRustStack-iotcdkappServiceRoleF76358-163KLQ0ZEJZYO",
+            "kinesis": {
+                "approximateArrivalTimestamp": 1647754350.713,
+                "data": "ewogICJtZXNzYWdlIjogInZhbHVlMSIsCiAgImZpcnN0TmFtZSI6ICJ2YWx1ZTIiCn0=",
+                "kinesisSchemaVersion": "1.0",
+                "partitionKey": "401e7e4e-79e3-4d4e-9ffe-bde7fcd64861",
+                "sequenceNumber": "49627791393825467122644142579333361006746715250912919554"
+            }
+        },
+        {
+            "awsRegion": "us-west-2",
+            "eventID": "shardId-000000000000:49627791393825467122644142579334569932566329880087625730",
+            "eventName": "aws:kinesis:record",
+            "eventSource": "aws:kinesis",
+            "eventSourceARN": "arn:aws:kinesis:us-west-2:628913483082:stream/my-awesome-stream",
+            "eventVersion": "1.0",
+            "invokeIdentityArn": "arn:aws:iam::628913483082:role/Cdkv2SamLambdaRustStack-iotcdkappServiceRoleF76358-163KLQ0ZEJZYO",
+            "kinesis": {
+                "approximateArrivalTimestamp": 1647754351.925,
+                "data": "ewogICJtZXNzYWdlIjogInZhbHVlMSIsCiAgImZpcnN0TmFtZSI6ICJ2YWx1ZTIiCn0=",
+                "kinesisSchemaVersion": "1.0",
+                "partitionKey": "5247c63a-a688-4da3-82f6-4b5f986d1692",
+                "sequenceNumber": "49627791393825467122644142579334569932566329880087625730"
+            }
+        },
+        {
+            "awsRegion": "us-west-2",
+            "eventID": "shardId-000000000000:49627791393825467122644142579335778858385944577981808642",
+            "eventName": "aws:kinesis:record",
+            "eventSource": "aws:kinesis",
+            "eventSourceARN": "arn:aws:kinesis:us-west-2:628913483082:stream/my-awesome-stream",
+            "eventVersion": "1.0",
+            "invokeIdentityArn": "arn:aws:iam::628913483082:role/Cdkv2SamLambdaRustStack-iotcdkappServiceRoleF76358-163KLQ0ZEJZYO",
+            "kinesis": {
+                "approximateArrivalTimestamp": 1647754352.779,
+                "data": "ewogICJtZXNzYWdlIjogInZhbHVlMSIsCiAgImZpcnN0TmFtZSI6ICJ2YWx1ZTIiCn0=",
+                "kinesisSchemaVersion": "1.0",
+                "partitionKey": "aa24dca6-65c1-4154-b80a-d4b6ad7442ce",
+                "sequenceNumber": "49627791393825467122644142579335778858385944577981808642"
+            }
+        }
+    ]
+}

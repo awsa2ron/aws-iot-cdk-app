@@ -6,8 +6,6 @@ import * as lambda_events from 'aws-cdk-lib/aws-lambda-event-sources';
 import * as logs from 'aws-cdk-lib/aws-logs';
 import * as iot from '@aws-cdk/aws-iot-alpha';
 import * as actions from '@aws-cdk/aws-iot-actions-alpha';
-import * as iot_events from '@aws-cdk/aws-iotevents-alpha';
-import * as iot_events_actions from '@aws-cdk/aws-iotevents-actions-alpha';
 
 const STREAM_NAME = 'iotCdkAppStream'
 const STREAM_PARTITION_KEY = 'iotCdkAppPartitionkey'
@@ -51,7 +49,7 @@ export class Cdkv2SamLambdaRustStack extends Stack {
       functionName: LAMBDA_NAME,
       description: LAMBDA_DESCRIPTION,
       code: lambda.Code.fromAsset(
-        'functions/lambda'
+        'functions/stream-lambda/lambda'
       ),
       runtime: lambda.Runtime.PROVIDED_AL2,
       architecture: lambda.Architecture.X86_64,
