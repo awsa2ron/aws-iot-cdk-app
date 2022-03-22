@@ -18,13 +18,14 @@ const DISCON_LAMBDA_PATCH = 'functions/disconnections/lambda'
 
 const CUSTOM_AUTH_NAME = APP_NAME + 'CustomAuth'
 const CUSTOM_AUTH_LAMBDA_PATCH = 'functions/custom-authorizer/lambda'
+const AUTHORIZER_NAME = 'iotCustomAuthorizer'
 
 export class Cdkv2SamLambdaRustStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
-
+    
     // AWS CloudWatch log group
-    let log_group = new logs.LogGroup(this, LOG_GROUP_NAME, {
+    new logs.LogGroup(this, LOG_GROUP_NAME, {
       logGroupName: LOG_GROUP_NAME,
     });
 
@@ -35,6 +36,7 @@ export class Cdkv2SamLambdaRustStack extends Stack {
     // in the request and makes an authentication decision. returns the results of 
     // the authentication decision and an AWS IoT Core policy document
     new iotCustomAuthentication(this, 'iotCustomAuthentication', {
+      authorizer_name: AUTHORIZER_NAME,
       lambda_name: CUSTOM_AUTH_NAME + 'Lambda',
       lambda_patch: CUSTOM_AUTH_LAMBDA_PATCH,
       lambda_env: {

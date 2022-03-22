@@ -1,0 +1,28 @@
+{
+  "Parameters": {
+    "AuthorizerFunctionArn": {
+      "Description": "",
+      "Type": "string"
+    },
+    "AuthorizerName": {
+      "Description": "",
+      "Type": "string"
+    }
+  },
+  "Resources": {
+    "CustomAuthorizer": {
+      "Type": "AWS::IoT::Authorizer",
+      "Properties": {
+        "AuthorizerFunctionArn": {
+          "Ref": "AuthorizerFunctionArn"
+        },
+        "AuthorizerName": {
+          "Ref": "AuthorizerName"
+        },
+        "EnableCachingForHttp": false,
+        "SigningDisabled": true,
+        "Status": "ACTIVE"
+      }
+    }
+  }
+}

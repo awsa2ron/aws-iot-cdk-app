@@ -1,11 +1,13 @@
 import { Duration, Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
+import * as cfninc from 'aws-cdk-lib/cloudformation-include';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as logs from 'aws-cdk-lib/aws-logs';
 
 
 
 export interface iotCustomAuthProps {
+    authorizer_name: string;
     lambda_name: string;
     lambda_discription?: string;
     lambda_patch: string;
@@ -21,7 +23,7 @@ export class iotCustomAuthentication extends Construct {
         super(scope, id);
 
         // AWS Lambda function
-        new lambda.Function(this, props.lambda_name, {
+        let authorizer = new lambda.Function(this, props.lambda_name, {
             functionName: props.lambda_name,
             description: props.lambda_discription || 'on' + props.lambda_architecture,
             code: lambda.Code.fromAsset(
@@ -34,5 +36,15 @@ export class iotCustomAuthentication extends Construct {
                 RUST_BACKTRACE: '1',
             },
         });
+
+        new cfninc.CfnInclude(this, 'CustomAuthorizer', {
+            templateFile: 'customAuthorizerCfn.json',
+            preserveLogicalIds: false,
+            parameters: {
+                'AuthorizerName': props.authorizer_name,
+                'AuthorizerFunctionArn': authorizer.functionArn,
+            },
+        });
+
     }
 }
