@@ -12,8 +12,8 @@ const IOT_RULE_SQL = "SELECT * FROM 'iot/queue'"
 export interface iotDisconnectionsProps {
     iot_rule_name: string;
     iot_rule_sql?: string;
-    sqs_name: string;
-    sqs_delivery_delay?: Duration;
+    queue_name: string;
+    queue_delivery_delay?: Duration;
     lambda_event_batch_size?: number;
     lambda_event_max_batching_window?: Duration;
     lambda_name: string;
@@ -30,8 +30,8 @@ export class iotDisconnections extends Construct {
         super(scope, id);
         // AWS SQS
         let queue = new sqs.Queue(this, 'Queue', {
-            queueName: props.sqs_name,
-            deliveryDelay: props.sqs_delivery_delay || Duration.seconds(5),
+            queueName: props.queue_name,
+            deliveryDelay: props.queue_delivery_delay || Duration.seconds(5),
         });
         // AWS IoT rule action
         // Put IoT disconnected events to sqs
@@ -47,7 +47,7 @@ export class iotDisconnections extends Construct {
         iot_rule.addAction(queue_action);
 
         // AWS Lambda function event mapping
-        let discon_source = new lambda_events.SqsEventSource(discon_queue, {
+        let discon_source = new lambda_events.SqsEventSource(queue, {
             batchSize: props.lambda_event_batch_size || 100,
             maxBatchingWindow: props.lambda_event_max_batching_window || Duration.minutes(1),
         });

@@ -48,7 +48,7 @@ export class iotStreamProcessing extends Construct {
         iot_rule.addAction(stream_action);
 
         // AWS Lambda function event mapping
-        let stream_source = new lambda_events.KinesisEventSource(data_stream, {
+        let stream_source = new lambda_events.KinesisEventSource(stream, {
             batchSize: props.lambda_event_batch_size || 100,
             maxBatchingWindow: props.lambda_event_max_batching_window || Duration.minutes(1),
             // The position in a stream from which to start reading. Required

@@ -12,6 +12,7 @@ export interface iotCustomAuthProps {
     lambda_runtime?: lambda.Runtime;
     lambda_architecture?: lambda.Architecture;
     lambda_handler?: string;
+    lambda_env?: { [key: string]: string };
     log_group?: logs.LogGroup;
 }
 
@@ -29,7 +30,7 @@ export class iotCustomAuthentication extends Construct {
             runtime: props.lambda_runtime || lambda.Runtime.PROVIDED_AL2,
             architecture: props.lambda_architecture || lambda.Architecture.X86_64,
             handler: props.lambda_handler || 'not.required',
-            environment: {
+            environment: props.lambda_env || {
                 RUST_BACKTRACE: '1',
             },
         });
