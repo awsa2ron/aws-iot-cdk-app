@@ -15,12 +15,12 @@ export interface iotCustomAuthProps {
     log_group?: logs.LogGroup;
 }
 
-export class iotCustomAuth extends Construct {
+export class iotCustomAuthentication extends Construct {
     constructor(scope: Construct, id: string, props: iotCustomAuthProps) {
         super(scope, id);
 
         // AWS Lambda function
-        let custom_auth_lambda = new lambda.Function(this, props.lambda_name + 'Id', {
+        new lambda.Function(this, props.lambda_name, {
             functionName: props.lambda_name,
             description: props.lambda_discription || 'on' + props.lambda_architecture,
             code: lambda.Code.fromAsset(
