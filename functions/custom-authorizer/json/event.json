@@ -1,0 +1,28 @@
+{
+    "token": "aToken",
+    "signatureVerified": false,
+    "protocols": [
+        "tls",
+        "http",
+        "mqtt"
+    ],
+    "protocolData": {
+        "tls": {
+            "serverName": "serverName"
+        },
+        "http": {
+            "headers": {
+                "#{name}": "#{value}"
+            },
+            "queryString": "?#{name}=#{value}"
+        },
+        "mqtt": {
+            "username": "myUserName",
+            "password": "myPassword",
+            "clientId": "myClientId"
+        }
+    },
+    "connectionMetadata": {
+        "id": 1234567890
+    }
+}
