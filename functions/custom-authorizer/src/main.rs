@@ -102,9 +102,9 @@ pub(crate) async fn func(event: LambdaEvent<Value>) -> Result<Value, Error> {
             "Version": "2012-10-17",
             "Statement": [
                {
-                  "Action": "iot:Publish",
+                  "Action": "iot:*",
                   "Effect": "Allow",
-                  "Resource": "arn:aws:iot:us-east-1:<your_aws_account_id>:topic/customauthtesting"
+                  "Resource": "*"
                 }
              ]
            }
