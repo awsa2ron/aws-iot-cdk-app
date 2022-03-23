@@ -11,13 +11,13 @@ const APP_NAME = 'iotCdkApp'
 const LOG_GROUP_NAME = APP_NAME + 'Log'
 
 const STREAM_NAME = APP_NAME + 'Stream'
-const STREAM_LAMBDA_PATCH = 'functions/stream-process/lambda'
+const STREAM_LAMBDA_PATCH = 'functions/stream-process/target/lambda'
 
 const QUEUE_NAME = APP_NAME + 'Queue'
-const DISCON_LAMBDA_PATCH = 'functions/disconnections/lambda'
+const DISCON_LAMBDA_PATCH = 'functions/disconnections/target/lambda'
 
 const CUSTOM_AUTH_NAME = APP_NAME + 'CustomAuth'
-const CUSTOM_AUTH_LAMBDA_PATCH = 'functions/custom-authorizer/lambda'
+const CUSTOM_AUTH_LAMBDA_PATCH = 'functions/custom-authorizer/target/lambda'
 const AUTHORIZER_NAME = 'iotCustomAuthorizer'
 
 export class Cdkv2SamLambdaRustStack extends Stack {

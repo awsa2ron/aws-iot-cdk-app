@@ -63,7 +63,7 @@ export class iotStreamProcessing extends Construct {
                 props.lambda_patch,
             ),
             runtime: props.lambda_runtime || lambda.Runtime.PROVIDED_AL2,
-            architecture: props.lambda_architecture || lambda.Architecture.X86_64,
+            architecture: props.lambda_architecture || lambda.Architecture.ARM_64,
             handler: props.lambda_handler || 'not.required',
             environment: {
                 RUST_BACKTRACE: '1',
