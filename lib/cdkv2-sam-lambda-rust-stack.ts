@@ -1,6 +1,7 @@
 import { Duration, Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as logs from 'aws-cdk-lib/aws-logs';
+import * as timestream from 'aws-cdk-lib/aws-timestream';
 
 import { iotCustomAuthentication } from './iot_custom_auth';
 import { iotStreamProcessing } from './iot_stream_proc';
@@ -9,6 +10,9 @@ import { iotDisconnections } from './iot_disconnections';
 const APP_NAME = 'iotCdkApp'
 
 const LOG_GROUP_NAME = APP_NAME + 'Log'
+
+const DATABASE_NAME = APP_NAME + 'DB'
+const DATABASE_TABLE_NAME = DATABASE_NAME + 'Table'
 
 const STREAM_NAME = APP_NAME + 'Stream'
 const STREAM_LAMBDA_PATCH = 'functions/stream-process/target/lambda'
@@ -24,6 +28,10 @@ export class Cdkv2SamLambdaRustStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
     
+    // AWS Timestream DB.
+    new timestream.CfnDatabase(this, 'iotDatabase', {
+      databaseName: DATABASE_NAME,
+    })
     // AWS CloudWatch log group
     new logs.LogGroup(this, LOG_GROUP_NAME, {
       logGroupName: LOG_GROUP_NAME,
@@ -70,5 +78,10 @@ export class Cdkv2SamLambdaRustStack extends Stack {
       lambda_name: QUEUE_NAME + 'Lambda',
       lambda_patch: DISCON_LAMBDA_PATCH,
     });
+
+    new timestream.CfnTable(this, 'iotDatabaseTable', {
+      tableName: DATABASE_TABLE_NAME,
+      databaseName: DATABASE_NAME,
+    })
   }
 }
