@@ -45,10 +45,10 @@ export class Cdkv2SamLambdaRustStack extends Stack {
     // in the request and makes an authentication decision. returns the results of 
     // the authentication decision and an AWS IoT Core policy document
     new iotCustomAuthentication(this, 'iotCustomAuthentication', {
-      authorizer_name: AUTHORIZER_NAME,
-      lambda_name: CUSTOM_AUTH_NAME + 'Lambda',
-      lambda_patch: CUSTOM_AUTH_LAMBDA_PATCH,
-      lambda_env: {
+      authorizerName: AUTHORIZER_NAME,
+      lambdaName: CUSTOM_AUTH_NAME + 'Lambda',
+      lambdaPatch: CUSTOM_AUTH_LAMBDA_PATCH,
+      lambdaEnv: {
         RUST_BACKTRACE: '1',
         USERNAME: 'aaron',
         PASSWORD: 'tsui',
@@ -68,12 +68,12 @@ export class Cdkv2SamLambdaRustStack extends Stack {
     // lambda will be triggered and process those batch data in Kinesis.
     // Finally, the lambda will write records to Timestream or other service.
     new iotStreamProcessing(this, 'iotStreamProcessing', {
-      iot_rule_name: STREAM_NAME + 'Rule',
-      stream_name: STREAM_NAME,
-      stream_partition_key: STREAM_NAME + 'PartitionKey',
-      lambda_name: STREAM_NAME + 'Lambda',
-      lambda_patch: STREAM_LAMBDA_PATCH,
-      database_table: db_table,
+      iotRuleName: STREAM_NAME + 'Rule',
+      streamName: STREAM_NAME,
+      streamPartitionKey: STREAM_NAME + 'PartitionKey',
+      lambdaName: STREAM_NAME + 'Lambda',
+      lambdaPatch: STREAM_LAMBDA_PATCH,
+      databaseTable: db_table,
       role_name: STREAM_NAME + 'Role',
     });
 
@@ -84,10 +84,10 @@ export class Cdkv2SamLambdaRustStack extends Stack {
     // One way to do this is by using SQS Delay Queues. 
     // https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-delay-queues.html
     new iotDisconnections(this, 'iotDisconnections', {
-      iot_rule_name: QUEUE_NAME + 'Rule',
-      queue_name: QUEUE_NAME,
-      lambda_name: QUEUE_NAME + 'Lambda',
-      lambda_patch: DISCON_LAMBDA_PATCH,
+      iotRuleName: QUEUE_NAME + 'Rule',
+      queueName: QUEUE_NAME,
+      lambdaName: QUEUE_NAME + 'Lambda',
+      lambdaPatch: DISCON_LAMBDA_PATCH,
     });
 
   }

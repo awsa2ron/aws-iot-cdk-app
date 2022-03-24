@@ -12,21 +12,21 @@ import * as iam from 'aws-cdk-lib/aws-iam';
 const IOT_RULE_SQL = "SELECT * FROM 'iot/stream'"
 
 export interface iotStreamProcessingProps {
-    iot_rule_name: string;
-    iot_rule_sql?: string;
-    stream_name: string;
-    stream_partition_key?: string;
-    lambda_event_batch_size?: number;
-    lambda_tumbling_window?: Duration;
-    lambda_name: string;
-    lambda_discription?: string;
-    lambda_patch: string;
-    lambda_runtime?: lambda.Runtime;
-    lambda_architecture?: lambda.Architecture;
-    lambda_handler?: string;
-    database_table?: timestream.CfnTable;
+    iotRuleName: string;
+    iotRuleSQL?: string;
+    streamName: string;
+    streamPartitionKey?: string;
+    lambdaEventBatchSize?: number;
+    lambdaTumblingWindow?: Duration;
+    lambdaName: string;
+    lambdaDiscription?: string;
+    lambdaPatch: string;
+    lambdaRuntime?: lambda.Runtime;
+    lambdaArchitecture?: lambda.Architecture;
+    lambdaHandler?: string;
+    databaseTable?: timestream.CfnTable;
     role_name: string;
-    log_group?: logs.LogGroup;
+    logGroup?: logs.LogGroup;
 }
 
 export class iotStreamProcessing extends Construct {
@@ -57,28 +57,28 @@ export class iotStreamProcessing extends Construct {
 
 
         // Create AWS IoT rule
-        let rule = new iot.TopicRule(this, props.iot_rule_name, {
-            topicRuleName: props.iot_rule_name,
-            sql: iot.IotSql.fromStringAsVer20160323(props.iot_rule_sql || IOT_RULE_SQL),
-            // errorAction: new iot_actions.CloudWatchLogsAction(props.log_group),
+        let rule = new iot.TopicRule(this, props.iotRuleName, {
+            topicRuleName: props.iotRuleName,
+            sql: iot.IotSql.fromStringAsVer20160323(props.iotRuleSQL || IOT_RULE_SQL),
+            // errorAction: new iot_actions.CloudWatchLogsAction(props.logGroup),
         });
 
         // Create Kinesis data stream
-        let stream = new kinesis.Stream(this, props.stream_name, {
-            streamName: props.stream_name,
+        let stream = new kinesis.Stream(this, props.streamName, {
+            streamName: props.streamName,
         });
 
         // Create Lambda
-        let func = new lambda.Function(this, props.lambda_name, {
+        let func = new lambda.Function(this, props.lambdaName, {
             role: role,
-            functionName: props.lambda_name,
-            description: props.lambda_discription || 'on' + props.lambda_architecture,
+            functionName: props.lambdaName,
+            description: props.lambdaDiscription || 'on' + props.lambdaArchitecture,
             code: lambda.Code.fromAsset(
-                props.lambda_patch,
+                props.lambdaPatch,
             ),
-            runtime: props.lambda_runtime || lambda.Runtime.PROVIDED_AL2,
-            architecture: props.lambda_architecture || lambda.Architecture.ARM_64,
-            handler: props.lambda_handler || 'not.required',
+            runtime: props.lambdaRuntime || lambda.Runtime.PROVIDED_AL2,
+            architecture: props.lambdaArchitecture || lambda.Architecture.ARM_64,
+            handler: props.lambdaHandler || 'not.required',
             environment: {
                 RUST_BACKTRACE: '1',
             },
@@ -86,14 +86,14 @@ export class iotStreamProcessing extends Construct {
 
         // AWS IoT rule -> Kinesis data stream
         rule.addAction(new iot_actions.KinesisPutRecordAction(stream, {
-            partitionKey: props.stream_partition_key || '${newuuid()}',
+            partitionKey: props.streamPartitionKey || '${newuuid()}',
         }));
 
         // Kinesis data stream -> Lambda event source mapping
         let stream_source = new lambda_events.KinesisEventSource(stream, {
-            batchSize: props.lambda_event_batch_size || 100,
-            // maxBatchingWindow: props.lambda_tumbling_window || Duration.minutes(1),
-            tumblingWindow: props.lambda_tumbling_window || Duration.minutes(1),
+            batchSize: props.lambdaEventBatchSize || 100,
+            // maxBatchingWindow: props.lambdaTumblingWindow || Duration.minutes(1),
+            tumblingWindow: props.lambdaTumblingWindow || Duration.minutes(1),
             // The position in a stream from which to start reading. Required
             startingPosition: lambda.StartingPosition.TRIM_HORIZON,
         });

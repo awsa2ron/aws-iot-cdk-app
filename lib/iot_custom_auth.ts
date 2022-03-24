@@ -7,41 +7,42 @@ import * as logs from 'aws-cdk-lib/aws-logs';
 
 
 export interface iotCustomAuthProps {
-    authorizer_name: string;
-    lambda_name: string;
-    lambda_discription?: string;
-    lambda_patch: string;
-    lambda_runtime?: lambda.Runtime;
-    lambda_architecture?: lambda.Architecture;
-    lambda_handler?: string;
-    lambda_env?: { [key: string]: string };
-    log_group?: logs.LogGroup;
+    authorizerName: string;
+    lambdaName: string;
+    lambdaDiscription?: string;
+    lambdaPatch: string;
+    lambdaRuntime?: lambda.Runtime;
+    lambdaArchitecture?: lambda.Architecture;
+    lambdaHandler?: string;
+    lambdaEnv?: { [key: string]: string };
+    logGroup?: logs.LogGroup;
 }
 
 export class iotCustomAuthentication extends Construct {
     constructor(scope: Construct, id: string, props: iotCustomAuthProps) {
         super(scope, id);
 
-        // AWS Lambda function
-        let authorizer = new lambda.Function(this, props.lambda_name, {
-            functionName: props.lambda_name,
-            description: props.lambda_discription || 'on' + props.lambda_architecture,
+        // Create the Lambda function
+        let authorizer = new lambda.Function(this, props.lambdaName, {
+            functionName: props.lambdaName,
+            description: props.lambdaDiscription || 'on' + props.lambdaArchitecture,
             code: lambda.Code.fromAsset(
-                props.lambda_patch,
+                props.lambdaPatch,
             ),
-            runtime: props.lambda_runtime || lambda.Runtime.PROVIDED_AL2,
-            architecture: props.lambda_architecture || lambda.Architecture.ARM_64,
-            handler: props.lambda_handler || 'not.required',
-            environment: props.lambda_env || {
+            runtime: props.lambdaRuntime || lambda.Runtime.PROVIDED_AL2,
+            architecture: props.lambdaArchitecture || lambda.Architecture.ARM_64,
+            handler: props.lambdaHandler || 'not.required',
+            environment: props.lambdaEnv || {
                 RUST_BACKTRACE: '1',
             },
         });
 
+        // Create AWS IoT authorizer
         new cfninc.CfnInclude(this, 'CustomAuthorizer', {
             templateFile: 'customAuthorizerCfn.json',
             preserveLogicalIds: false,
             parameters: {
-                'AuthorizerName': props.authorizer_name,
+                'AuthorizerName': props.authorizerName,
                 'AuthorizerFunctionArn': authorizer.functionArn,
             },
         });
