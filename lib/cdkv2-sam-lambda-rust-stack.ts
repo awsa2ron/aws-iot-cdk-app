@@ -28,16 +28,6 @@ export class Cdkv2SamLambdaRustStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
     
-    // AWS Timestream DB.
-    // Create a Timestream DB very first, in case it not ready when using.
-    new timestream.CfnDatabase(this, 'iotDatabase', {
-      databaseName: DATABASE_NAME,
-    })
-    // AWS CloudWatch log group
-    new logs.LogGroup(this, LOG_GROUP_NAME, {
-      logGroupName: LOG_GROUP_NAME,
-    });
-
     // IoT custom authentication.
     // Any IoT message through either MQTT or HTTP, even MQTT over Websocket,
     // sent to IoT broker will trigger a custom authorizer for authentication.
@@ -55,13 +45,6 @@ export class Cdkv2SamLambdaRustStack extends Stack {
       }
     });
 
-    // AWS Timestream DB table.
-    // Create a DB table for data storage, 
-    let db_table = new timestream.CfnTable(this, 'iotDatabaseTable', {
-      tableName: DATABASE_TABLE_NAME,
-      databaseName: DATABASE_NAME,
-    })
-
     // IoT data stream processing.
     // IoT rule will be triggered and send all iot message to Kinesis data stream.
     // After Kinesis received more than 100 message or longer than 1 minutes, 
@@ -73,7 +56,8 @@ export class Cdkv2SamLambdaRustStack extends Stack {
       streamPartitionKey: STREAM_NAME + 'PartitionKey',
       lambdaName: STREAM_NAME + 'Lambda',
       lambdaPatch: STREAM_LAMBDA_PATCH,
-      databaseTable: db_table,
+      databaseName: DATABASE_NAME,
+      // databaseTable: DATABASE_TABLE_NAME,
       role_name: STREAM_NAME + 'Role',
     });
 

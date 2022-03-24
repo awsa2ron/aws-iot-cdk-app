@@ -8,6 +8,7 @@ import * as iot_actions from '@aws-cdk/aws-iot-actions-alpha';
 import * as logs from 'aws-cdk-lib/aws-logs';
 import * as timestream from 'aws-cdk-lib/aws-timestream';
 import * as iam from 'aws-cdk-lib/aws-iam';
+import { posix } from 'path';
 
 const IOT_RULE_SQL = "SELECT * FROM 'iot/stream'"
 
@@ -24,7 +25,8 @@ export interface iotStreamProcessingProps {
     lambdaRuntime?: lambda.Runtime;
     lambdaArchitecture?: lambda.Architecture;
     lambdaHandler?: string;
-    databaseTable?: timestream.CfnTable;
+    databaseName: string;
+    databaseTableName?: string;
     role_name: string;
     logGroup?: logs.LogGroup;
 }
@@ -82,6 +84,16 @@ export class iotStreamProcessing extends Construct {
             environment: {
                 RUST_BACKTRACE: '1',
             },
+        })
+
+        // AWS Timestream DB.
+        let db = new timestream.CfnDatabase(this, props.databaseName, {
+            databaseName: props.databaseName,
+        })
+        // AWS Timestream DB table.
+        let db_table = new timestream.CfnTable(this, props.databaseName + 'Table', {
+            tableName: props.databaseTableName,
+            databaseName: props.databaseName,
         })
 
         // AWS IoT rule -> Kinesis data stream
