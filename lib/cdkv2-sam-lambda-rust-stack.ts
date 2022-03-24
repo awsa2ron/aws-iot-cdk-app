@@ -29,6 +29,7 @@ export class Cdkv2SamLambdaRustStack extends Stack {
     super(scope, id, props);
     
     // AWS Timestream DB.
+    // Create a Timestream DB very first, in case it not ready when using.
     new timestream.CfnDatabase(this, 'iotDatabase', {
       databaseName: DATABASE_NAME,
     })
@@ -54,6 +55,13 @@ export class Cdkv2SamLambdaRustStack extends Stack {
       }
     });
 
+    // AWS Timestream DB table.
+    // Create a DB table for data storage, 
+    let db_table = new timestream.CfnTable(this, 'iotDatabaseTable', {
+      tableName: DATABASE_TABLE_NAME,
+      databaseName: DATABASE_NAME,
+    })
+
     // IoT data stream processing.
     // IoT rule will be triggered and send all iot message to Kinesis data stream.
     // After Kinesis received more than 100 message or longer than 1 minutes, 
@@ -62,8 +70,11 @@ export class Cdkv2SamLambdaRustStack extends Stack {
     new iotStreamProcessing(this, 'iotStreamProcessing', {
       iot_rule_name: STREAM_NAME + 'Rule',
       stream_name: STREAM_NAME,
+      stream_partition_key: STREAM_NAME + 'PartitionKey',
       lambda_name: STREAM_NAME + 'Lambda',
       lambda_patch: STREAM_LAMBDA_PATCH,
+      database_table: db_table,
+      role_name: STREAM_NAME + 'Role',
     });
 
     // IoT devices disconnections.
@@ -79,9 +90,5 @@ export class Cdkv2SamLambdaRustStack extends Stack {
       lambda_patch: DISCON_LAMBDA_PATCH,
     });
 
-    new timestream.CfnTable(this, 'iotDatabaseTable', {
-      tableName: DATABASE_TABLE_NAME,
-      databaseName: DATABASE_NAME,
-    })
   }
 }

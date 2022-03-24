@@ -6,6 +6,8 @@ import * as kinesis from 'aws-cdk-lib/aws-kinesis';
 import * as iot from '@aws-cdk/aws-iot-alpha';
 import * as actions from '@aws-cdk/aws-iot-actions-alpha';
 import * as logs from 'aws-cdk-lib/aws-logs';
+import * as timestream from 'aws-cdk-lib/aws-timestream';
+import * as iam from 'aws-cdk-lib/aws-iam';
 
 const IOT_RULE_SQL = "SELECT * FROM 'iot/stream'"
 
@@ -22,6 +24,8 @@ export interface iotStreamProcessingProps {
     lambda_runtime?: lambda.Runtime;
     lambda_architecture?: lambda.Architecture;
     lambda_handler?: string;
+    database_table?: timestream.CfnTable;
+    role_name: string;
     log_group?: logs.LogGroup;
 }
 
@@ -55,8 +59,29 @@ export class iotStreamProcessing extends Construct {
             startingPosition: lambda.StartingPosition.TRIM_HORIZON,
         });
 
+        // AWS IAM role and trust policy.
+        let role = new iam.Role(this, props.role_name, {
+            roleName: props.role_name,
+            assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
+        });
+        // permissions policy
+        role.addToPolicy(new iam.PolicyStatement({
+            effect: iam.Effect.ALLOW,
+            actions: ['timestream:WriteRecords'],
+            // should be like this:
+            // "arn:aws:timestream:<us-east-1>:<account_id>:database/sampleDB/table/DevOps"
+            resources: ['*'],
+        }));
+        role.addToPolicy(new iam.PolicyStatement({
+            effect: iam.Effect.ALLOW,
+            actions: ['timestream:DescribeEndpoints'],
+            resources: ['*'],
+        }));
+        role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaBasicExecutionRole'));
+
         // AWS Lambda function
-        new lambda.Function(this, props.lambda_name, {
+        let mylambda = new lambda.Function(this, props.lambda_name, {
+            role: role,
             functionName: props.lambda_name,
             description: props.lambda_discription || 'on' + props.lambda_architecture,
             code: lambda.Code.fromAsset(
@@ -70,6 +95,7 @@ export class iotStreamProcessing extends Construct {
             },
         })
             .addEventSource(stream_source);
+
 
     }
 }
