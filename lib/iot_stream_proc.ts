@@ -17,7 +17,7 @@ export interface iotStreamProcessingProps {
     stream_name: string;
     stream_partition_key?: string;
     lambda_event_batch_size?: number;
-    lambda_event_max_batching_window?: Duration;
+    lambda_tumbling_window?: Duration;
     lambda_name: string;
     lambda_discription?: string;
     lambda_patch: string;
@@ -92,7 +92,8 @@ export class iotStreamProcessing extends Construct {
         // Kinesis data stream -> Lambda event source mapping
         let stream_source = new lambda_events.KinesisEventSource(stream, {
             batchSize: props.lambda_event_batch_size || 100,
-            maxBatchingWindow: props.lambda_event_max_batching_window || Duration.minutes(1),
+            // maxBatchingWindow: props.lambda_tumbling_window || Duration.minutes(1),
+            tumblingWindow: props.lambda_tumbling_window || Duration.minutes(1),
             // The position in a stream from which to start reading. Required
             startingPosition: lambda.StartingPosition.TRIM_HORIZON,
         });
